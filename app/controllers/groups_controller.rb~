@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
 
-    render json: @group.to_json(:include => {:memberships => {:only => [:admin], :include => {:user => {:only => [:id, :first_name, :last_name, :email]}}}})
+    render json: @group.to_json(:include => {:memberships => {:only => [:admin], :include => {:user => {:only => [:id, :first_name, :last_name, :email]}}})
   end
 
   # GET /groups/new

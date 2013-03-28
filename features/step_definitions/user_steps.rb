@@ -1,41 +1,35 @@
 Given(/^I am an user$/) do
-   @user = FactoryGirl.build(:user)
+   @user = User.create(first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com")
 end
 
 Given(/^there are some users:$/) do |users|
-	users.hashes.each{|u| FactoryGirl.build(:user, u)}
+	users.hashes.each{|u| User.create(u)}
 end
 
-
-When(/^I need to organize them into a group$/) do
-  pending # express the regexp above with the code you wish you had
+When(/^I assign the name "(.*?)" to the group$/) do |group_name|
+  @group_name = group_name
 end
 
-When(/^I tap on "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+When(/^I select the users or admins who will be in the group:$/) do |users|
+  @users = users.hashes
 end
 
-When(/^I assign the name "(.*?)" to the group$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-
-When(/^I select the users or admins who will be in the group$/) do
-  pending # express the regexp above with the code you wish you had
-end
 
 When(/^if it is neccesary an expiration date$/) do
-  pending # express the regexp above with the code you wish you had
+  @expiration = Date.new(2014,12,10)
 end
 
 When(/^save the changes$/) do
-  pending # express the regexp above with the code you wish you had
+  post '/groups', :group => {:name => @group_name, :users => @users, :expiration => @expiration}
 end
 
-Then(/^the group "(.*?)" should be created$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then(/^the group "(.*?)" should be created$/) do |group_name|
+  visit('/groups')
+  page.should have_content(group_name)
 end
 
-Then(/^then I should be and admin for the group "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then(/^then I should be and admin for the group "(.*?)"$/) do |group_name|
+  visit('/groups/1')
+  page.should have_content("\"admin\":true,\"user\":{\"email\":\"dj.vita.09@gmail.com\"")
 end
 

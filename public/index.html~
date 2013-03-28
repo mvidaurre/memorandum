@@ -25,7 +25,10 @@
     <script type="text/javascript" charset="utf-8">
       $(function() {
         function addTask(task) {
-          $('#tasks').append('<li>' + task.user.email + '</li>');
+        	for(var key in task) {
+    			alert('key: ' + key + '\n' + 'value: ' + task[key]);
+			}
+          $('#tasks').append('<li>' + task.inspect + '</li>');
         }
 
         $('#new_task').submit(function(e) {

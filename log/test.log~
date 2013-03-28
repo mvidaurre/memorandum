@@ -1,0 +1,50 @@
+Connecting to database specified by database.yml
+  [1m[36m (0.9ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (8.9ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "first_name", "last_name", "password", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["created_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["email", "dj.vita.09@gmail.com"], ["first_name", "Elias"], ["last_name", "Vidaurre"], ["password", nil], ["updated_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "users" ("created_at", "email", "first_name", "last_name", "password", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["created_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["email", "hf@me.com"], ["first_name", "Hugo"], ["last_name", "Fernandez"], ["password", "09876543"], ["updated_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "first_name", "last_name", "password", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["created_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["email", "marired@outlook.com"], ["first_name", "Marisela"], ["last_name", "Rojo"], ["password", "asdasdsa"], ["updated_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("created_at", "email", "first_name", "last_name", "password", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["created_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["email", "tcolsa@rm.com"], ["first_name", "Tomas"], ["last_name", "Colsa"], ["password", "8888777"], ["updated_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/groups" for 127.0.0.1 at 2013-03-28 16:40:54 -0600
+Processing by GroupsController#create as HTML
+  Parameters: {"group"=>{"name"=>"My Group", "users"=>[{"first_name"=>"Hugo", "admin"=>"false"}, {"first_name"=>"Tomas", "admin"=>"true"}, {"first_name"=>"Elias", "admin"=>"true"}], "expiration"=>"2014-12-10"}}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."first_name" = 'Hugo' LIMIT 1
+User Hugo: #<User id: 2, first_name: "Hugo", last_name: "Fernandez", email: "hf@me.com", password: "09876543", created_at: "2013-03-28 22:40:54", updated_at: "2013-03-28 22:40:54">
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."first_name" = 'Hugo' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.8ms)[0m  [1mINSERT INTO "groups" ("created_at", "expiration", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["expiration", Wed, 10 Dec 2014], ["name", "My Group"], ["updated_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00]]
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO "memberships" ("admin", "created_at", "group_id", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)  [["admin", false], ["created_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["group_id", 1], ["updated_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["user_id", 2]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."first_name" = 'Tomas' LIMIT 1
+User Tomas: #<User id: 4, first_name: "Tomas", last_name: "Colsa", email: "tcolsa@rm.com", password: "8888777", created_at: "2013-03-28 22:40:54", updated_at: "2013-03-28 22:40:54">
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."first_name" = 'Tomas' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "memberships" ("admin", "created_at", "group_id", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)[0m  [["admin", true], ["created_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["group_id", 1], ["updated_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["user_id", 4]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."first_name" = 'Elias' LIMIT 1[0m
+User Elias: #<User id: 1, first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com", password: nil, created_at: "2013-03-28 22:40:54", updated_at: "2013-03-28 22:40:54">
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."first_name" = 'Elias' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "memberships" ("admin", "created_at", "group_id", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)  [["admin", true], ["created_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["group_id", 1], ["updated_at", Thu, 28 Mar 2013 22:40:54 UTC +00:00], ["user_id", 1]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 225ms (Views: 4.4ms | ActiveRecord: 5.6ms)
+Started GET "/groups" for 127.0.0.1 at 2013-03-28 16:40:54 -0600
+Processing by GroupsController#index as HTML
+  [1m[35mGroup Load (0.3ms)[0m  SELECT "groups".* FROM "groups" 
+Completed 200 OK in 5ms (Views: 1.7ms | ActiveRecord: 0.3ms)
+Started GET "/groups/1" for 127.0.0.1 at 2013-03-28 16:40:54 -0600
+Processing by GroupsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGroup Load (0.3ms)[0m  [1mSELECT "groups".* FROM "groups" WHERE "groups"."id" = ? LIMIT 1[0m  [["id", "1"]]
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" INNER JOIN "memberships" ON "users"."id" = "memberships"."user_id" WHERE "memberships"."group_id" = 1
+Completed 200 OK in 80ms (Views: 0.2ms | ActiveRecord: 0.8ms)
+  [1m[36m (0.3ms)[0m  [1mrollback transaction[0m
