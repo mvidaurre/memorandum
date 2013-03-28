@@ -25,10 +25,7 @@
     <script type="text/javascript" charset="utf-8">
       $(function() {
         function addTask(task) {
-        	for(var key in task) {
-    			alert('key: ' + key + '\n' + 'value: ' + task[key]);
-			}
-          $('#tasks').append('<li>' + task.inspect + '</li>');
+          $('#tasks').append('<li>' + task.user.email + '</li>');
         }
 
         $('#new_task').submit(function(e) {
@@ -46,8 +43,11 @@
     <div id="container">
       <h1>To-Do List</h1>
       <form id="new_task">
+        <label>First Name:</label>
         <input type="text" name="user[first_name]" id="first_name">
-        <input type="text" name="user[last_name]" id="last_name">    
+        <label>Last Name:</label>
+        <input type="text" name="user[last_name]" id="last_name"> 
+        <label>email:</label>   
         <input type="text" name="user[email]" id="email">    
         <input type="submit" value="Add">
       </form>
