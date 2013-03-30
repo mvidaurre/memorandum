@@ -29,7 +29,8 @@ Then(/^the group "(.*?)" should be created$/) do |group_name|
 end
 
 Then(/^then I should be and admin for the group "(.*?)"$/) do |group_name|
-  visit('/groups/1')
+  id = Group.find_by_name(group_name).id  
+  visit("/groups/#{id}")
   page.should have_content("\"admin\":true,\"user\":{\"email\":\"dj.vita.09@gmail.com\"")
 end
 

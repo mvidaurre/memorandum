@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130328214323) do
+ActiveRecord::Schema.define(:version => 20130330014356) do
 
   create_table "groups", :force => true do |t|
     t.string   "name"
@@ -30,6 +30,19 @@ ActiveRecord::Schema.define(:version => 20130328214323) do
 
   add_index "memberships", ["group_id"], :name => "index_memberships_on_group_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+
+  create_table "memos", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.date     "due_date"
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "memos", ["group_id"], :name => "index_memos_on_group_id"
+  add_index "memos", ["user_id"], :name => "index_memos_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name"

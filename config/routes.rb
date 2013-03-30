@@ -1,7 +1,10 @@
 Memorandum::Application.routes.draw do
+  
   resources :users, except: :edit
 
-  resources :groups, except: :edit
+  resources :groups, except: :edit do 
+    resources :memos, except: :edit
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
