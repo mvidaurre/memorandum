@@ -1,8 +1,14 @@
 class MemosController < ApplicationController
   # GET /memos
   # GET /memos.json
+  before_filter :get_group
+
+  def get_group
+    @group = Group.find(params[:group_id])
+  end
+
   def index
-    @memos = Memo.all
+    @memos = @group.memos
 
     render json: @memos
   end
@@ -10,7 +16,7 @@ class MemosController < ApplicationController
   # GET /memos/1
   # GET /memos/1.json
   def show
-    @memo = Memo.find(params[:id])
+    @memo = @group.memos.find(params[:id])
 
     render json: @memo
   end
@@ -18,7 +24,7 @@ class MemosController < ApplicationController
   # GET /memos/new
   # GET /memos/new.json
   def new
-    @memo = Memo.new
+    @memo = @group.memos.build
 
     render json: @memo
   end
@@ -26,10 +32,10 @@ class MemosController < ApplicationController
   # POST /memos
   # POST /memos.json
   def create
-    @memo = Memo.new(params[:memo])
+    @memo = @group.memos.new(params[:memo])
 
     if @memo.save
-      render json: @memo, status: :created, location: [@memo.group, @memo]
+      render json: [@group, @memo], status: :created, location: [@group, @memo]
     else
       render json: @memo.errors, status: :unprocessable_entity
     end
@@ -38,7 +44,7 @@ class MemosController < ApplicationController
   # PATCH/PUT /memos/1
   # PATCH/PUT /memos/1.json
   def update
-    @memo = Memo.find(params[:id])
+    @memo = @group.memos.find(params[:id])
 
     if @memo.update_attributes(params[:memo])
       head :no_content
@@ -50,7 +56,7 @@ class MemosController < ApplicationController
   # DELETE /memos/1
   # DELETE /memos/1.json
   def destroy
-    @memo = Memo.find(params[:id])
+    @memo = @group.memos.find(params[:id])
     @memo.destroy
 
     head :no_content

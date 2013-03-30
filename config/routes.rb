@@ -1,6 +1,10 @@
 Memorandum::Application.routes.draw do
   
-  resources :users, except: :edit
+  resources :users, except: :edit do
+    resources :groups, except: :edit do 
+      resources :memos, except: :edit
+    end
+  end
 
   resources :groups, except: :edit do 
     resources :memos, except: :edit
