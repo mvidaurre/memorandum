@@ -1,0 +1,67 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Groups in Socialmemo</title>
+    <style type="text/css" media="screen">
+      html, body {
+        background-color: #4B7399;
+        font-family: Verdana, Helvetica, Arial;
+        font-size: 14px;
+      }
+      a { color: #0000FF; }
+
+      #container {
+        width: 75%;
+        margin: 0 auto;
+        background-color: #FFF;
+        padding: 20px 40px;
+        border: solid 1px black;
+        margin-top: 20px;
+      }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+      $(function() {
+        function addgroup(group) {
+          $('#groups').append('<li><a href="/groups/' + group.group.id + '">' + group.group.name + '</a> ' + '<a href="/groups/' + group.group.id + '/memos">Memos</a>'+ ' <a href="/groups/' + group.group.id + '/memos/new">New Memo</a></li>');
+        }
+
+        function adduser(user) {
+          $('#users').append('<li>' + user.user.first_name + " " + user.user.last_name + ': <input type="checkbox" name="group[users][][id]" value="'+ user.user.id + '" /> Admin:<input type="checkbox" name="group[users][][admin]" value="true"</li>');
+        }
+
+        $('#new_group').submit(function(e) {
+          $.post('/groups', $(this).serialize(), addgroup);
+          this.reset();
+          e.preventDefault();
+        });
+
+        $.getJSON('/groups', function(groups) {
+          $.each(groups, function() { addgroup(this); });
+        });
+
+        $.getJSON('/users', function(users) {
+          $.each(users, function() { adduser(this); });
+        });
+
+      });
+    </script>
+  <body>
+    <div id="container">
+      <h1>Create Group for SocialMemo</h1>
+      <form id="new_group">
+        <label>Name:</label>
+        <input type="text" name="group[name]" id="name">
+        <ul id="users">Users:</ul>
+        <input type="submit" value="Add">
+      </form>
+      <ul id="groups">Group List:</ul>
+      <div id="menu">
+        <a href="/">Users</a>
+      </div>
+    </div>
+  </body>
+</html>
+
