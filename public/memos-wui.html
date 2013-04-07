@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Create Users in Socialmemo</title>
+    <title>Create Memos in Socialmemo</title>
     <style type="text/css" media="screen">
       html, body {
         background-color: #4B7399;
@@ -24,38 +24,38 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript" charset="utf-8">
       $(function() {
-        function adduser(user) {
-          $('#users').append('<li><a href="/users/' + user.user.id + '">' + user.user.email + '</a></li>');
+        function addmemo(memo) {
+          $('#memos').append('<li><a href="/memos/' + memo.memo.id + '">' + memo.memo.name + '</a> ' + '<a href="/memos/' + memo.memo.id + '/memos">Memos</a>'+ ' <a href="/memos/' + memo.memo.id + '/memos/new">New Memo</a></li>');
         }
 
-        $('#new_user').submit(function(e) {
-          $.post('/users', $(this).serialize(), adduser);
+        $('#new_memo').submit(function(e) {
+          $.post('/memos', $(this).serialize(), addmemo);
           this.reset();
           e.preventDefault();
+        });
+
+        $.getJSON('/memos', function(memos) {
+          $.each(memos, function() { addmemo(this); });
         });
 
         $.getJSON('/users', function(users) {
           $.each(users, function() { adduser(this); });
         });
+
       });
     </script>
   <body>
     <div id="container">
-      <h1>Create new user for SocialMemo</h1>
-      <form id="new_user">
-        <label>First Name:</label>
-        <input type="text" name="user[first_name]" id="first_name">
-        <label>Last Name:</label>
-        <input type="text" name="user[last_name]" id="last_name"> 
-        <label>email:</label>   
-        <input type="text" name="user[email]" id="email">
-        <label>password:</label>   
-        <input type="password" name="user[password]" id="password">       
+      <h1>Create memo for SocialMemo</h1>
+      <form id="new_memo">
+        <label>Name:</label>
+        <input type="text" name="memo[name]" id="name">
+        <ul id="users">Users:</ul>
         <input type="submit" value="Add">
       </form>
-      <ul id="users">User List:</ul>
+      <ul id="memos">memo List:</ul>
       <div id="menu">
-        <a href="/groups-wui.html">Groups</a>
+        <a href="/">Users</a>
       </div>
     </div>
   </body>
