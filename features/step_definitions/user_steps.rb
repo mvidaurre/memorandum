@@ -1,5 +1,5 @@
 Given(/^I am an user$/) do
-   @user = User.create(first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com")
+   @user = User.create(first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com", password: "password")
 end
 
 Given(/^there are some users:$/) do |users|
@@ -13,7 +13,6 @@ end
 When(/^I select the users or admins who will be in the group:$/) do |users|
   @users = users.hashes
 end
-
 
 When(/^if it is neccesary an expiration date$/) do
   @expiration = Date.new(2014,12,10)

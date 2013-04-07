@@ -28,7 +28,7 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(name: params[:group][:name], expiration: params[:group][:expiration])
     params[:group][:users].each do |u|
-    	Membership.create(group: @group, user: User.find(u[:id]), admin:u[:admin])
+    	Membership.create(group: @group, user: User.where("id = ? OR email = ?", u[:id], u[:email]).first, admin:u[:admin])
     end
 
     if @group.save
