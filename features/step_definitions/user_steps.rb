@@ -1,9 +1,9 @@
 Given(/^I am an user$/) do
-   @user = User.create(first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com", password: "password")
+  post '/users', :user => {first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com", password: "password"}
 end
 
 Given(/^there are some users:$/) do |users|
-	users.hashes.each{|u| User.create(u)}
+	users.hashes.each{|u| post '/users', :user => u}
 end
 
 When(/^I assign the name "(.*?)" to the group$/) do |group_name|
