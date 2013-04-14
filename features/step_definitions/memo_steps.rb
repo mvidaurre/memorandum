@@ -29,12 +29,29 @@ Then(/^the members of the group "(.*?)" should receive the memo with title "(.*?
   end
 end
 
-Then(/^the user with email "(.*?)" confirmed that he has read the memo titles "(.*?)"$/) do |user_email, memo_title|
+Then(/^the user with email "(.*?)" confirmed that he has read the memo titled "(.*?)"$/) do |user_email, memo_title|
   @memo = Memo.find_by_title(memo_title)
   @user = User.find_by_email(user_email)
   post "/users/#{@user.id}/groups/#{@group_id}/memos/#{@memo.id}/user_read_memos", read: true
 end
 
-Then(/^all the members of the group "(.*?)" will see how many people have read the memo$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then(/^all the members of the group "(.*?)" will see that "(.*?)" people have read the memo with title "(.*?)"$/) do | group, read_number, memo_title|
+  @memo = Memo.find_by_title(memo_title)
+  @group = Group.find_by_name(group)
+
+  @group.users.each do |u|
+    visit("/users/#{u.id}/groups/#{@group.id}/memos/#{@memo.id}")
+
+    page.should have_content("\"user_read_memos_count\":#{read_number}")
+  end
+end
+
+Then(/^for memo titled "(.*?)" the following users have confirmed reading the memo:$/) do |memo_title, users|
+  # table is a Cucumber::Ast::Table
+  @memo = Memo.find_by_title(memo_title)
+  @group_id = @memo.group.id
+  users.hashes.each do |u|
+    user = User.find_by_email(u[:email])
+    post "/users/#{user.id}/groups/#{@group_id}/memos/#{@memo.id}/user_read_memos", read: true
+  end
 end
