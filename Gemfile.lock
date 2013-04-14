@@ -152,6 +152,7 @@ DEPENDENCIES
   factory_girl_rails
   json_spec
   pg
+  rack-test
   railroady
   rails (= 3.2.13)
   rails-api

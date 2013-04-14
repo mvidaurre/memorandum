@@ -3,6 +3,7 @@ Memorandum::Application.routes.draw do
   
 
   resources :users, except: :edit do
+    post "login", on: :collection
     resources :groups, except: :edit do 
       resources :memos, except: :edit do
         resources :user_read_memos, except: :edit

@@ -1,5 +1,5 @@
 Given(/^I am an user$/) do
-  post '/users', :user => {first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com", password: "password"}
+  post '/users', :user => {first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com", password: "password", password_confirmation: "password"}
 end
 
 Given(/^there are some users:$/) do |users|
@@ -33,3 +33,14 @@ Then(/^then I should be and admin for the group "(.*?)"$/) do |group_name|
   page.should have_content("\"admin\":true,\"user\":{\"email\":\"dj.vita.09@gmail.com\"")
 end
 
+
+#New Scenario
+
+When(/^I give my info:$/) do |user_info|
+  post '/users', :user => user_info.rows_hash
+end
+
+Then(/^I should be registered as a new user with email "(.*?)" and password "(.*?)" receiving the api token assigned to me$/) do |email, password|
+  post '/users/login', :user => {email: "#{email}", password: "#{password}"}
+  assert JSON.parse(last_response.body)["user"]["api_token"] != nil, "API Token was nil JSON: #{last_response.body}"
+end

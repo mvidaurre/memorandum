@@ -55,4 +55,12 @@ class UsersController < ApplicationController
 
     head :no_content
   end
+
+  # POST /users/login
+  def login
+    @user = User.where(email: params[:user][:email], password: params[:user][:password]).first
+    logger.info "User: #{@user.email} for these params: #{params}"
+    render json: @user
+
+  end
 end

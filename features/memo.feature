@@ -6,10 +6,11 @@ Feature: Create Memo
   Scenario: Send a Memo read by one user
     Given I am an user
     And I belong to the group "My Group" with members:
-      | first_name | last_name | email               | password |
-      | Hugo       | Fernandez | hf@me.com           | 09876543 |
-      | Marisela   | Rojo      | marired@outlook.com | asdasdsa |
-      | Tomas      | Colsa     | tcolsa@rm.com       | 8888777  | 
+      | first_name | last_name | email               | password | password_confirmation |
+      | Hugo       | Fernandez | hf@me.com           | 09876543 | 09876543              |
+      | Marisela   | Rojo      | marired@outlook.com | asdasdsa | asdasdsa              |
+      | Tomas      | Colsa     | tcolsa@rm.com       | 8888777  | 8888777               |
+
     When I select the group "My Group"
     And I create a memo with:
       | Title       | tarea                |
@@ -23,12 +24,12 @@ Feature: Create Memo
     Scenario: Send a Memo read by multiple users
     Given I am an user
     And I belong to the group "My Group" with members:
-      | first_name | last_name | email               | password |
-      | Hugo       | Fernandez | hf@me.com           | 09876543 |
-      | Marisela   | Rojo      | marired@outlook.com | asdasdsa |
-      | Tomas      | Colsa     | tcolsa@rm.com       | 8888777  | 
-      | Brayan     | Acosta    | bracost@hotmail.com | 45wer! |
-      | Enrique      | Arias     | earias1001@gmail.com       | 8888777  | 
+      | first_name | last_name | email                | password | password_confirmation |
+      | Hugo       | Fernandez | hf@me.com            | 09876543 | 09876543              |
+      | Marisela   | Rojo      | marired@outlook.com  | asdasdsa | asdasdsa              |
+      | Tomas      | Colsa     | tcolsa@rm.com        | 8888777  | 8888777               |
+      | Brayan     | Acosta    | bracost@hotmail.com  | 45wer!   | 45wer!                |
+      | Enrique    | Arias     | earias1001@gmail.com | 8888777  | 8888777               |
     When I select the group "My Group"
     And I create a memo with:
       | Title       | reunion              |

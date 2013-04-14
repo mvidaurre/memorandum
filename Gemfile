@@ -29,6 +29,7 @@ group :test do
   gem 'cucumber-rails', :require => false
   # database_cleaner is not required, but highly recommended
   gem 'database_cleaner'
+  gem 'rack-test', require: "rack/test"
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'json_spec'
