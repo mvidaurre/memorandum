@@ -16,7 +16,7 @@ Feature: Create Memo
       | Description | Hacer los ejercicios |
       | Due Date    | 2013-05-02           |
     Then the members of the group "My Group" should receive the memo with title "tarea"
-    And the user must confirm that he has read the memo
+    And the user with email "hf@me.com" confirmed that he has read the memo titles "tarea"
     And all the members of the group "My Group" will see how many people have read the memo
   
   

@@ -29,8 +29,10 @@ Then(/^the members of the group "(.*?)" should receive the memo with title "(.*?
   end
 end
 
-Then(/^the user must confirm that he has read the memo$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^the user with email "(.*?)" confirmed that he has read the memo titles "(.*?)"$/) do |user_email, memo_title|
+  @memo = Memo.find_by_title(memo_title)
+  @user = User.find_by_email(user_email)
+  post "/users/#{@user.id}/groups/#{@group_id}/memos/#{@memo.id}/user_read_memos", read: true
 end
 
 Then(/^all the members of the group "(.*?)" will see how many people have read the memo$/) do |arg1|
