@@ -42,6 +42,7 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
+    logger.info "Put parameters: #{params.to_json}"
     @group = Group.find(params[:id])
 
     if @group.update_attributes(params[:group])
