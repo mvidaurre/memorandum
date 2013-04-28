@@ -29,7 +29,14 @@ Feature: Manage a Group by an admin
       | hf@me.com            | false |
       | marired@outlook.com  | true  |
       | dj.vita.09@gmail.com | true  |  
-    When as an admin I try to edit the name "My Group" to "Vita's Group"
+    When as an admin I try to edit the name to "Vita's Group"
     Then the title should be changed to "Vita's Group"
 
-  
+  Scenario: Edit an Expiration Date
+    Given The group "My Group" is already created with the following users:
+      | email                | admin |
+      | hf@me.com            | false |
+      | marired@outlook.com  | true  |
+      | dj.vita.09@gmail.com | true  |  
+    When as an admin I try to edit the date to "2014-02-28"
+    Then the date should be changed to "2014-02-28"  

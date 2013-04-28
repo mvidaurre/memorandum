@@ -37,12 +37,11 @@ end
 #Edit Group name
 Given(/^The group "(.*?)" is already created with the following users:$/) do |group_name, users_group|
    post '/groups', :group => {:name => group_name, :users => users_group.hashes, :expiration => Date.new(2014,1,10)}
-
+   @group_id = Group.find_by_name(group_name).id  
 end
 
-When(/^as an admin I try to edit the name "(.*?)" to "(.*?)"$/) do |old_group_name, new_group_name|
+When(/^as an admin I try to edit the name to "(.*?)"$/) do |new_group_name|
   @user_id= User.find_by_email("dj.vita.09@gmail.com").id  
-  @group_id = Group.find_by_name(old_group_name).id  
   put "/users/#{@user_id}/groups/#{@group_id}", :group => {:name => new_group_name}    
 end
 
@@ -51,5 +50,15 @@ Then(/^the title should be changed to "(.*?)"$/) do |new_group_name|
   page.should have_content(new_group_name) 
 end
 
+# Edit Expiration Date
+When(/^as an admin I try to edit the date to "(.*?)"$/)  do | new_expiration|
+  @user_id= User.find_by_email("dj.vita.09@gmail.com").id  
+  put "/users/#{@user_id}/groups/#{@group_id}", :group => {:expiration => new_expiration} 
+end
+
+Then(/^the date should be changed to "(.*?)"$/) do |new_expiration|
+  visit("/users/#{@user_id}/groups/#{@group_id}")
+  page.should have_content(new_expiration) 
+end
 
 
