@@ -55,3 +55,21 @@ Then(/^for memo titled "(.*?)" the following users have confirmed reading the me
     post "/users/#{user.id}/groups/#{@group_id}/memos/#{@memo.id}/user_read_memos", read: true
   end
 end
+# Edit Memo Title
+Given(/^the memo in the Group "(.*?)" is already created with the following fields:$/) do |group_name, table|
+  @group_id = Group.find_by_name(group_name).id  
+  @user_id= User.find_by_email("dj.vita.09@gmail.com").id  
+  memo = table.rows_hash
+  post "/groups/#{@group_id}/memos", :memo => {:title => memo['Title'], :description => memo['Description'], :due_date => memo['Due Date']}
+  @memo_id = Memo.find_by_title(memo['Title']).id
+end
+
+When(/^as an admin I try to edit the Title to "(.*?)"$/) do |new_title|
+  put "/users/#{@user_id}/groups/#{@group_id}/memos/#{@memo_id}", :memo => {:title => new_title}
+
+end
+
+Then(/^the memo Title should be changed to "(.*?)"$/) do |new_title|
+  visit("/users/#{@user_id}/groups/#{@group_id}/memos/#{@memo_id}")
+  page.should have_content(new_title) 
+end

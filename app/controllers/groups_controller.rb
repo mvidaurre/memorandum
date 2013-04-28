@@ -28,11 +28,10 @@ class GroupsController < ApplicationController
   def create
     #logger.info "Post parameters: #{params}"
     @group = Group.new(name: params[:group][:name], expiration: params[:group][:expiration])
-    params[:group][:users].each do |u|
-    	Membership.create(group: @group, user: User.where("id = ? OR email = ?", u[:id], u[:email]).first, admin:u[:admin])
-    end
-
     if @group.save
+      params[:group][:users].each do |u|
+        Membership.create(group: @group, user: User.where("id = ? OR email = ?", u[:id], u[:email]).first, admin:u[:admin])
+      end
       render json: @group, status: :created, location: @group
     else
       render json: @group.errors, status: :unprocessable_entity
