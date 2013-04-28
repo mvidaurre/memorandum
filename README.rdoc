@@ -6,6 +6,13 @@ Social Memo is an application that allows you to send mesages to your Group. Mem
 
 == API resources URIS
 
+login_users POST   /users/login(.:format)                                                        users#login
+            user_group_memberships GET    /users/:user_id/groups/:group_id/memberships(.:format)                        memberships#index
+                                   POST   /users/:user_id/groups/:group_id/memberships(.:format)                        memberships#create
+         new_user_group_membership GET    /users/:user_id/groups/:group_id/memberships/new(.:format)                    memberships#new
+             user_group_membership GET    /users/:user_id/groups/:group_id/memberships/:id(.:format)                    memberships#show
+                                   PUT    /users/:user_id/groups/:group_id/memberships/:id(.:format)                    memberships#update
+                                   DELETE /users/:user_id/groups/:group_id/memberships/:id(.:format)                    memberships#destroy
    user_group_memo_user_read_memos GET    /users/:user_id/groups/:group_id/memos/:memo_id/user_read_memos(.:format)     user_read_memos#index
                                    POST   /users/:user_id/groups/:group_id/memos/:memo_id/user_read_memos(.:format)     user_read_memos#create
 new_user_group_memo_user_read_memo GET    /users/:user_id/groups/:group_id/memos/:memo_id/user_read_memos/new(.:format) user_read_memos#new
@@ -30,6 +37,12 @@ new_user_group_memo_user_read_memo GET    /users/:user_id/groups/:group_id/memos
                               user GET    /users/:id(.:format)                                                          users#show
                                    PUT    /users/:id(.:format)                                                          users#update
                                    DELETE /users/:id(.:format)                                                          users#destroy
+                 group_memberships GET    /groups/:group_id/memberships(.:format)                                       memberships#index
+                                   POST   /groups/:group_id/memberships(.:format)                                       memberships#create
+              new_group_membership GET    /groups/:group_id/memberships/new(.:format)                                   memberships#new
+                  group_membership GET    /groups/:group_id/memberships/:id(.:format)                                   memberships#show
+                                   PUT    /groups/:group_id/memberships/:id(.:format)                                   memberships#update
+                                   DELETE /groups/:group_id/memberships/:id(.:format)                                   memberships#destroy
                        group_memos GET    /groups/:group_id/memos(.:format)                                             memos#index
                                    POST   /groups/:group_id/memos(.:format)                                             memos#create
                     new_group_memo GET    /groups/:group_id/memos/new(.:format)                                         memos#new
@@ -42,9 +55,6 @@ new_user_group_memo_user_read_memo GET    /users/:user_id/groups/:group_id/memos
                              group GET    /groups/:id(.:format)                                                         groups#show
                                    PUT    /groups/:id(.:format)                                                         groups#update
                                    DELETE /groups/:id(.:format)                                                         groups#destroy
-
-
-
 
 
 app

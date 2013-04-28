@@ -45,4 +45,18 @@ Feature: Create Memo
     When as an admin I try to edit the Title to "Junta urgente"  
     Then the memo Title should be changed to "Junta urgente"   
 
-  
+  Scenario: Edit a Memo Description
+    Given the memo in the Group "My Group" is already created with the following fields:
+      | Title       | reunion              |
+      | Description | Junta a ls 3pm       |
+      | Due Date    | 2013-09-02           |
+    When as an admin I try to edit the Description  to "Junta a las 5pm"  
+    Then the memo Title should be changed to "Junta a las 5pm"  
+
+  Scenario: Edit a Memo Due Date
+    Given the memo in the Group "My Group" is already created with the following fields:
+      | Title       | reunion              |
+      | Description | Junta a ls 3pm       |
+      | Due Date    | 2013-09-02           |
+    When as an admin I try to edit the Due Date  to "2013-09-05"  
+    Then the memo Title should be changed to "2013-09-05"    

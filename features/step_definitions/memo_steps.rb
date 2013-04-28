@@ -73,3 +73,13 @@ Then(/^the memo Title should be changed to "(.*?)"$/) do |new_title|
   visit("/users/#{@user_id}/groups/#{@group_id}/memos/#{@memo_id}")
   page.should have_content(new_title) 
 end
+
+#Edit Memo Description
+When(/^as an admin I try to edit the Description  to "(.*?)"$/) do |new_description|
+  put "/users/#{@user_id}/groups/#{@group_id}/memos/#{@memo_id}", :memo => {:description => new_description}
+end
+
+#Edit Memo Due Date
+When(/^as an admin I try to edit the Due Date  to "(.*?)"$/) do |new_date|
+  put "/users/#{@user_id}/groups/#{@group_id}/memos/#{@memo_id}", :memo => {:due_date => new_date}
+end
