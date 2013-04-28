@@ -32,5 +32,20 @@ Scenario: Create a new user
       | password_confirmation | 36450981           |
   Then I should be registered as a new user with email "a01221612@itesm.mx" and password "36450981" receiving the api token assigned to me
 
+  Scenario: Login for an existing user
+    Given I am an user
+    When I give my login info:
+      | email    | dj.vita.09@gmail.com|
+      | password | password           |
+ 
+    Then I should be logged in receiving the api token assigned to me
 
+  Scenario: Login for a non-registered user
+    Given There are no users registered
+    When I give my login info:
 
+      | email    | bgates@microsoft.com |
+      | password | riches           |
+ 
+    Then I should receive an error message 
+    And there should be no token assigned to me
