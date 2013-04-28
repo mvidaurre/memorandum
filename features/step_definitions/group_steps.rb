@@ -61,4 +61,17 @@ Then(/^the date should be changed to "(.*?)"$/) do |new_expiration|
   page.should have_content(new_expiration) 
 end
 
+#Add Users
+When(/^as an admin I try to add the user:$/) do |members| 
+  members.hashes.each{|m| post "/users/#{User.find_by_email(m[:email]).id}/groups/#{@group_id}/memberships", :membership => {admin: m[:admin]}}
+
+end
+
+Then(/^the users of the group should be changed to$/) do |members|
+
+  visit("/groups/#{@group_id}")
+  members.hashes.each{|m| page.should have_content(m[:email])}
+
+end
+
 

@@ -32,7 +32,7 @@ class MemosController < ApplicationController
   # POST /memos
   # POST /memos.json
   def create
-    @memo = @group.memos.new(params[:memo])
+    @memo = @group.memos.create(params[:memo])
 
     if @memo.save
       render json: [@group, @memo], status: :created, location: [@group, @memo]

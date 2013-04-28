@@ -8,7 +8,11 @@ Feature: Manage a Group by an admin
       | first_name | last_name | email               | password | password_confirmation |
       | Hugo       | Fernandez | hf@me.com           | 09876543 | 09876543              |
       | Marisela   | Rojo      | marired@outlook.com | asdasdsa | asdasdsa              |
+      | Miguel      | Aramis     | aramis001@gmail.com      | 18524  | 18524               |
+      | Steve      | Jobs     | steve@apple.com       | APPL  | APPL               |      
+      | Barack      | Obama     | president@usa.gov       | 46th  | 46th               |
       | Tomas      | Colsa     | tcolsa@rm.com       | 8888777  | 8888777               |
+
 
   Scenario: Create a new group
     When I assign the name "My Group" to the group
@@ -39,4 +43,20 @@ Feature: Manage a Group by an admin
       | marired@outlook.com  | true  |
       | dj.vita.09@gmail.com | true  |  
     When as an admin I try to edit the date to "2014-02-28"
-    Then the date should be changed to "2014-02-28"  
+    Then the date should be changed to "2014-02-28" 
+    
+  Scenario: Add Users
+    Given The group "My Group" is already created with the following users:
+      | email                | admin |
+      | hf@me.com            | false |
+      | marired@outlook.com  | true  |
+      | dj.vita.09@gmail.com | true  |    
+    When as an admin I try to add the user:
+      | email                | admin |
+      | tcolsa@rm.com        | false |  
+    Then the users of the group should be changed to 
+      | email                | admin |
+      | hf@me.com            | false |
+      | marired@outlook.com  | true  |
+      | dj.vita.09@gmail.com | true  |     
+      | tcolsa@rm.com        | false |  
