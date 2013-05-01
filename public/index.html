@@ -25,7 +25,7 @@
     <script type="text/javascript" charset="utf-8">
       $(function() {
         function adduser(user) {
-          $('#users').append('<li><a href="/users/' + user.user.id + '">' + user.user.email + '</a></li>');
+          $('#users').append('<li><a href="/users/' + user.user.id + '">' + user.user.email + " api-token: "+ user.user.api_token + '</a></li>');
         }
 
         $('#new_user').submit(function(e) {

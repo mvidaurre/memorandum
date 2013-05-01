@@ -1,4 +1,16 @@
 #Register a new user
+Given(/^I am an user$/) do
+  post '/users', :user => {first_name: "Elias", last_name: "Vidaurre", email: "dj.vita.09@gmail.com", password: "password", password_confirmation: "password"}
+  post '/users/login', :user => {email: "dj.vita.09@gmail.com", password: "password"}
+  @api_token = JSON.parse(last_response.body)["user"]["api_token"]
+  assert @api_token != nil, "API Token was nil JSON: #{last_response.body}"
+
+end
+
+Given(/^there are some users:$/) do |users|
+	users.hashes.each{|u| post '/users', :user => u}
+end
+
 When(/^I give my info:$/) do |user_info|
   post '/users', :user => user_info.rows_hash
 end

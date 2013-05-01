@@ -10,6 +10,7 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    logger.info "Get parameters: #{params}"
     @group = Group.find(params[:id])
 
     render json: @group.to_json(:include => {:memberships => {:only => [:admin], :include => {:user => {:only => [:id, :first_name, :last_name, :email]}}}})
@@ -26,7 +27,7 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    #logger.info "Post parameters: #{params}"
+    logger.info "Post parameters: #{params}"
     @group = Group.new(name: params[:group][:name], expiration: params[:group][:expiration])
     if @group.save
       params[:group][:users].each do |u|

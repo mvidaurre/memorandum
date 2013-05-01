@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_filter :require_api_token, :only => [:new, :create, :login]
   # GET /users
   # GET /users.json
   def index
@@ -61,10 +62,8 @@ class UsersController < ApplicationController
     @user = User.where(email: params[:user][:email], password: params[:user][:password]).first
     unless @user.nil?
       #logger.info "User: #{@user.email} for these params: #{params}" 
-      session[:current_user_id] = @user.id
       render json: @user
     else
-      session[:current_user_id] = nil
       render json: {error: "USER NOT FOUND OR INCORRECT PASSWORD"}
     end  
 
