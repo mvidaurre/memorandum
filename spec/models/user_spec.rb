@@ -17,7 +17,15 @@ describe User do
   		password: "12345678", 
   		password_confirmation: "1235678")).to have(1).error_on(:password)
   end
-   it "validates presence of email, first name, last name, password, password_confirmation" do
+  it "validates that the password has at least 8 charactes of length" do
+  	expect(User.create(
+  		first_name: "Andy", 
+  		last_name: "Lindeman", 
+  		email: "al@gmail.com", 
+  		password: "123456", 
+  		password_confirmation: "123456")).to have(1).error_on(:password)
+  end
+  it "validates presence of email, first name, last name, password, password_confirmation" do
   	expect(User.create(
   		first_name: "", 
   		last_name: "Lindeman", 
@@ -41,7 +49,7 @@ describe User do
   		last_name: "Becker", 
   		email: "rb@me.it", 
   		password: "", 
-  		password_confirmation: "12345678")).to have(2).error_on(:password)
+  		password_confirmation: "12345678")).to have(3).error_on(:password)
   end
   it "validates email format" do
   	expect(User.create(
