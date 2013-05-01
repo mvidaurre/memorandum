@@ -60,9 +60,11 @@ class UsersController < ApplicationController
   def login
     @user = User.where(email: params[:user][:email], password: params[:user][:password]).first
     unless @user.nil?
-      logger.info "User: #{@user.email} for these params: #{params}" 
+      #logger.info "User: #{@user.email} for these params: #{params}" 
+      session[:current_user_id] = @user.id
       render json: @user
     else
+      session[:current_user_id] = nil
       render json: {error: "USER NOT FOUND OR INCORRECT PASSWORD"}
     end  
 
