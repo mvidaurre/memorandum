@@ -17,4 +17,8 @@ class ApplicationController < ActionController::API
   	User.where('api_token = ? ', params[:api_token]).first if params[:api_token] 	
   end
 
+  def authorized_user?
+    current_user == User.find(params[:id]) || current_user.super_admin?
+  end
+
 end

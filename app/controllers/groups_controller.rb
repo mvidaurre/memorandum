@@ -1,14 +1,6 @@
 class GroupsController < ApplicationController
   before_filter :get_membership, :only => [:show, :index, :update, :destroy] 
 
-  def get_membership
-    if params[:group_id] || params[:id]
-      id = params[:group_id] || params[:id]
-      @group = Group.find(id)
-      @membership = current_user.memberships.where("group_id = ?", @group.id).first
-      @group = nil if @membership.nil?
-    end
-  end
   # GET /groups
   # GET /groups.json
   def index
@@ -41,7 +33,7 @@ class GroupsController < ApplicationController
     @group = Group.new(name: params[:group][:name], expiration: params[:group][:expiration])
     if @group.save
       params[:group][:users].each do |u|
-        Membership.create(group: @group, user: User.where("id = ? OR email = ?", u[:id], u[:email]).first, admin:u[:admin])
+        @group.memberships.create(user: User.where("id = ? OR email = ?", u[:id], u[:email]).first, admin:u[:admin])
       end
       render json: @group, status: :created, location: @group
     else
@@ -74,5 +66,16 @@ class GroupsController < ApplicationController
        render json: {error: "YOU MUST BE AN ADMINISTRATOR TO COMPLETE THIS ACTION"}, status: :unprocessable_entity
     end 
     head :no_content
+  end
+
+  private
+
+  def get_membership
+    if params[:group_id] || params[:id]
+      id = params[:group_id] || params[:id]
+      @group = Group.find(id)
+      @membership = current_user.memberships.where("group_id = ?", @group.id).first
+      @group = nil if @membership.nil?
+    end
   end
 end
