@@ -13,12 +13,14 @@ end
 
 When(/^I select the group "(.*?)"$/) do |group|
   @group_id = Group.find_by_name(group).id  
-  visit("/groups/#{@group_id}?api_token=#{@api_token}")
+  @user = User.find_by_email("dj.vita.09@gmail.com")
+  visit("/users/#{@user.id}/groups/#{@group_id}?api_token=#{@api_token}")
 end
 
 When(/^I create a memo with:$/) do |table|
   memo = table.rows_hash
-  post "/groups/#{@group_id}/memos?api_token=#{@api_token}", :memo => {:title => memo['Title'], :description => memo['Description'], :due_date => memo['Due Date']}
+  @user = User.find_by_email("dj.vita.09@gmail.com")
+  post "/users/#{@user.id}/groups/#{@group_id}/memos?api_token=#{@api_token}", :memo => {:title => memo['Title'], :description => memo['Description'], :due_date => memo['Due Date']}
 end
 
 Then(/^the members of the group "(.*?)" should receive the memo with title "(.*?)"$/) do |group, title|
@@ -60,7 +62,7 @@ Given(/^the memo in the Group "(.*?)" is already created with the following fiel
   @group_id = Group.find_by_name(group_name).id  
   @user_id= User.find_by_email("dj.vita.09@gmail.com").id  
   memo = table.rows_hash
-  post "/groups/#{@group_id}/memos?api_token=#{@api_token}", :memo => {:title => memo['Title'], :description => memo['Description'], :due_date => memo['Due Date']}
+  post "/users/#{@user_id}/groups/#{@group_id}/memos?api_token=#{@api_token}", :memo => {:title => memo['Title'], :description => memo['Description'], :due_date => memo['Due Date']}
   @memo_id = Memo.find_by_title(memo['Title']).id
 end
 
