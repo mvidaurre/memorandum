@@ -30,10 +30,14 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     #logger.info "Post parameters: #{params}"
-    @group = Group.new(name: params[:group][:name], expiration: params[:group][:expiration])
+    @group = Group.new(name: params[:group][:name], expiration: params[:group][:expiration], owner: current_user)
+
     if @group.save
-      params[:group][:users].each do |u|
-        @group.memberships.create(user: User.where("id = ? OR email = ?", u[:id], u[:email]).first, admin:u[:admin])
+      @group.memberships.create!(user: current_user, admin: true)
+      if params[:group][:users]
+        params[:group][:users].each do |u|
+          @group.memberships.create!(user: User.where("id = ? OR email = ?", u[:id], u[:email]).first, admin:u[:admin])
+        end
       end
       render json: @group, status: :created, location: @group
     else

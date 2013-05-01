@@ -53,8 +53,8 @@ Then(/^the date should be changed to "(.*?)"$/) do |new_expiration|
 end
 
 #Add Users
-When(/^as an admin I try to add the user:$/) do |members| 
-  members.hashes.each{|m| post "/users/#{User.find_by_email(m[:email]).id}/groups/#{@group_id}/memberships?api_token=#{@api_token}", :membership => {admin: m[:admin]}}
+When(/^as an admin I try to add the user:$/) do |member| 
+  member.hashes.each{|m| post "/users/#{User.find_by_email(m[:email]).id}/groups/#{@group_id}/memberships?api_token=#{@api_token}", :membership => {admin: m[:admin]}}
 end
 
 Then(/^the users of the group should be changed to$/) do |members|

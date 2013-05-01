@@ -1,10 +1,15 @@
 class MemosController < ApplicationController
   # GET /memos
   # GET /memos.json
-  before_filter :get_group
+  before_filter :get_membership
 
-  def get_group
-    @group = Group.find(params[:group_id])
+  def get_membership
+    if params[:group_id] || params[:id]
+      id = params[:group_id] || params[:id]
+      @group = Group.find(id)
+      @membership = current_user.memberships.where("group_id = ?", @group.id).first
+      @group = nil if @membership.nil?
+    end
   end
 
   def index

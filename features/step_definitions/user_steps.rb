@@ -7,7 +7,10 @@ Given(/^I am an user$/) do
 end
 
 Given(/^there are some users:$/) do |users|
-	users.hashes.each{|u| post '/users', :user => u}
+	users.hashes.each do |u| 
+    post '/users', :user => u
+    #assert last_response.ok?, "last_response error: #{last_response.errors} "
+  end
 end
 
 When(/^I give my info:$/) do |user_info|
