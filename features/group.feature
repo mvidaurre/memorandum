@@ -60,3 +60,17 @@ Feature: Manage a Group by an admin
       | marired@outlook.com  | true  |
       | dj.vita.09@gmail.com | true  |     
       | tcolsa@rm.com        | false |  
+  Scenario: Remove Users
+    Given The group "My Group" is already created with the following users:
+      | email                | admin |
+      | hf@me.com            | false |
+      | marired@outlook.com  | true  |
+      | dj.vita.09@gmail.com | true  |    
+    When as an admin I try to remove the user:
+      | email                | admin |
+      | marired@outlook.com  | true  |
+    Then the users of the group should be changed to 
+      | email                | admin |
+      | hf@me.com            | false |
+      | dj.vita.09@gmail.com | true  |     
+ 

@@ -74,4 +74,10 @@ Then(/^the users of the group should be changed to$/) do |members|
 
 end
 
+#Remove Users From Group
+When(/^as an admin I try to remove the user:$/) do |members|
+
+  members.hashes.each{|m| delete "/users/#{User.find_by_email(m[:email]).id}/groups/#{@group_id}/memberships/1", :membership => {admin: m[:admin]}}
+end
+
 

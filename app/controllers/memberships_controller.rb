@@ -1,8 +1,9 @@
 class MembershipsController < ApplicationController
-  before_filter :get_group
+  before_filter :get_group_and_user
 
-  def get_group
+  def get_group_and_user
     @group = Group.find(params[:group_id])
+    @user = User.find(params[:user_id])
   end
 
   # GET /memberships
@@ -16,7 +17,7 @@ class MembershipsController < ApplicationController
   # GET /memberships/1
   # GET /memberships/1.json
   def show
-    @membership = @group.memberships.find(params[:id])
+    @membership = @user.memberships.where("group_id = ?", @group.id).first
 
     render json: @membership
   end
@@ -33,7 +34,7 @@ class MembershipsController < ApplicationController
   # POST /memberships.json
   def create
     logger.info "Post parameters memberships: #{params}"
-    @membership = @group.memberships.create(user: User.find(params[:user_id]), admin: params[:membership][:admin] )
+    @membership = @group.memberships.create(user: @user, admin: params[:membership][:admin] )
 
     if @membership.save
       render json: @membership, status: :created, location: [@group, @membership]
@@ -57,7 +58,7 @@ class MembershipsController < ApplicationController
   # DELETE /memberships/1
   # DELETE /memberships/1.json
   def destroy
-    @membership = @group.memberships.find(params[:id])
+    @membership = @user.memberships.where("group_id = ?", @group.id).first
     @membership.destroy
 
     head :no_content
