@@ -12,8 +12,9 @@ Memorandum::Application.routes.draw do
   end
 
   resources :groups, except: :edit do 
-    resources :memos, except: :edit 
-    
+    resources :memos, except: :edit do
+      get "ids", on: :collection
+    end
   end
 
   # The priority is based upon order of creation:

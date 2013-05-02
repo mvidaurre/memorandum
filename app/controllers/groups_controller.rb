@@ -26,7 +26,7 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    #logger.info "Post parameters: #{params}"
+    logger.info "Post parameters: #{params.to_json}"
     @group = Group.new(name: params[:group][:name], expiration: params[:group][:expiration])
     params[:group][:users].each do |u|
     	Membership.create(group: @group, user: User.where("id = ? OR email = ?", u[:id], u[:email]).first, admin:u[:admin])

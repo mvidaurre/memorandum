@@ -13,6 +13,12 @@ class MemosController < ApplicationController
     render json: @memos
   end
 
+  def ids
+    @memos_ids = @group.memos.map{|m| m.id}
+
+    render json: @memos_ids
+  end
+
   # GET /memos/1
   # GET /memos/1.json
   def show
