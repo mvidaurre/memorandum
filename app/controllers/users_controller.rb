@@ -59,8 +59,12 @@ class UsersController < ApplicationController
   # POST /users/login
   def login
     @user = User.where(email: params[:user][:email], password: params[:user][:password]).first
-    logger.info "User: #{@user.email} for these params: #{params}"
-    render json: @user
+    unless @user.nil?
+      logger.info "User: #{@user.email} for these params: #{params}" 
+      render json: @user
+    else
+      render json: {error: "USER NOT FOUND OR INCORRECT PASSWORD"}
+    end  
 
   end
 end
