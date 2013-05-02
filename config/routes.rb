@@ -1,8 +1,5 @@
 Memorandum::Application.routes.draw do
   
-  
-
- 
 
   resources :users, except: :edit do
     post "login", on: :collection
@@ -14,17 +11,11 @@ Memorandum::Application.routes.draw do
     end
   end
 
-<<<<<<< HEAD
   resources :groups, except: :edit do 
+    resources :memberships, except: :edit
     resources :memos, except: :edit do
       get "ids", on: :collection
     end
-=======
-  resources :groups, except: :edit do
-    resources :memberships, except: :edit
-    resources :memos, except: :edit 
-    
->>>>>>> 0a5430e967a6f619649dc333c78e24013d5db941
   end
 
   # The priority is based upon order of creation:
