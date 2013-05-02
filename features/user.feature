@@ -17,15 +17,12 @@ Scenario: Register a new user
     When I give my login info:
       | email    | dj.vita.09@gmail.com|
       | password | password           |
- 
     Then I should be logged in receiving the api token assigned to me
 
   Scenario: Login for a non-registered user
     Given There are no users registered
     When I give my login info:
-
       | email    | bgates@microsoft.com |
       | password | riches           |
- 
     Then I should receive an error message 
     And there should be no token assigned to me

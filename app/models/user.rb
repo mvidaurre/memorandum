@@ -6,8 +6,10 @@ class User < ActiveRecord::Base
   has_many :user_read_memos
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :api_token
   validates :email, :first_name, :last_name, :password, :password_confirmation, :presence => true
+  validates_confirmation_of :password
+  validates :password, :length => { :in => 8..64 }
   validates :email, :uniqueness => true, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Invalid email format" }
-
+  
 private
   
   def generate_api_token

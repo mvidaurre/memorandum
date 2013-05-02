@@ -10,7 +10,6 @@ class MembershipsController < ApplicationController
   # GET /memberships.json
   def index
     @memberships = @group.memberships
-
     render json: @memberships
   end
 
@@ -18,7 +17,6 @@ class MembershipsController < ApplicationController
   # GET /memberships/1.json
   def show
     @membership = @user.memberships.where("group_id = ?", @group.id).first
-
     render json: @membership
   end
 
@@ -26,7 +24,6 @@ class MembershipsController < ApplicationController
   # GET /memberships/new.json
   def new
     @membership = @group.memberships.build
-
     render json: @membership
   end
 
@@ -35,7 +32,6 @@ class MembershipsController < ApplicationController
   def create
     logger.info "Post parameters memberships: #{params}"
     @membership = @group.memberships.create(user: @user, admin: params[:membership][:admin] )
-
     if @membership.save
       render json: @membership, status: :created, location: [@group, @membership]
     else
@@ -47,7 +43,6 @@ class MembershipsController < ApplicationController
   # PATCH/PUT /memberships/1.json
   def update
     @membership = @group.memberships.find(params[:id])
-
     if @membership.update_attributes(params[:membership])
       head :no_content
     else
@@ -60,7 +55,6 @@ class MembershipsController < ApplicationController
   def destroy
     @membership = @user.memberships.where("group_id = ?", @group.id).first
     @membership.destroy
-
     head :no_content
   end
 end
