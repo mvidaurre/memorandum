@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :require_api_token, :only => [:new, :create, :login]
+  #skip_before_filter :require_api_token, :only => [:new, :create, :login]
   # GET /users
   # GET /users.json
   def index
@@ -28,6 +28,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user, status: :created, location: @user
     else
+      logger.info "User create errors: #{@user.errors{|e| e.to_json}}"
       render json: @user.errors, status: :unprocessable_entity
     end
   end

@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-	before_filter :require_api_token
+	#before_filter :require_api_token
 
   
   private
